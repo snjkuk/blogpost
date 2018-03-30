@@ -1,0 +1,55 @@
+<p id="notice"><%= notice %></p>
+
+<h1>
+  Posts
+  <%= link_to 'New Post', new_post_path, class: "pull-right" %>
+</h1>
+
+<% @posts.each do |post| %>
+  <div class="post-box">
+    <h4>
+      <%= link_to post.title, post %>
+    </h4>
+    <h5><%= post.content %></h5>
+    <p>
+      <span><%= post.user.username %></span>
+      |
+      <span><%= post.comments.count %> Comments</span>
+    </p>
+
+    <h4>Comment</h4>
+
+    <%= render 'comments/form', post_id: post.id, comment: Comment.new, parent_id: nil %>
+
+    <% post.comments.each do |comment| %>
+      <div class="well">
+        <h5><%= comment.comment %></h5>
+        <p>
+          <span><%= comment.user.username %></span>
+          |
+          <span><%= comment.replies.count %> Replies</span>
+        </p>
+
+        <h4>Reply</h4>
+
+        <%= render 'comments/form', post_id: nil, comment: Comment.new, parent_id: comment.id %>
+
+        <% comment.replies.each do |reply| %>
+          <div class="well">
+            <h5><%= reply.comment %></h5>
+            <p>
+              <span><%= reply.user.username %></span>
+            </p>
+
+          </div>
+        <% end %>
+
+      </div>
+    <% end %>
+  </div>
+<% end %>
+
+
+<style type="text/css">
+  .post-box{border: 1px solid; padding: 10px; margin: 10px 0px;}
+</style>

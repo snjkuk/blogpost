@@ -1,0 +1,43 @@
+<h1>
+	<%= @post.title %>
+	<%= link_to 'Back', posts_path, class: "pull-right" %>
+</h1>
+
+<div class="well">
+  <h5><%= @post.content %></h5>
+  <p>
+    <span><%= @post.user.username %></span>
+    |
+    <span><%= @post.comments.count %> Comments</span>
+  </p>
+
+  <h4>Comment</h4>
+
+  <%= render 'comments/form', post_id: @post.id, comment: Comment.new, parent_id: nil %>
+
+  <% @post.comments.each do |comment| %>
+    <div class="well">
+      <h5><%= comment.comment %></h5>
+      <p>
+        <span><%= comment.user.username %></span>
+        |
+        <span><%= comment.replies.count %> Replies</span>
+      </p>
+
+      <h4>Reply</h4>
+
+      <%= render 'comments/form', post_id: nil, comment: Comment.new, parent_id: comment.id %>
+
+      <% comment.replies.each do |reply| %>
+        <div class="well">
+          <h5><%= reply.comment %></h5>
+          <p>
+            <span><%= reply.user.username %></span>
+          </p>
+
+        </div>
+      <% end %>
+
+    </div>
+  <% end %>
+</div>

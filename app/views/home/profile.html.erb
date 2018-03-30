@@ -1,0 +1,25 @@
+<h2>User Login History</h2>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Time</th>
+      <th>Latitude</th>
+      <th>Longitude</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @user_logins.each do |user_login| %>
+      <tr>
+        <td><%= user_login.created_at %></td>
+        <td><%= user_login.latitude %></td>
+        <td><%= user_login.longitude %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+
+<script type="text/javascript">
+  $('table').DataTable({
+  });
+</script>
